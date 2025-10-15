@@ -15,7 +15,7 @@ test.describe("[AnatoyKarpovichApp][demo-registration-form]", () => {
     country: "USA",
     email: "parturient.montes@protonmail.org",
     gender: "female",
-    hobbies: ["Travelling", "Movies"],
+    hobbies: "Travelling",
     language: "English",
     skills: ["JavaScript", "Python"],
     dateOfBirth: { year: "1990", month: "December", day: "5" },
@@ -68,5 +68,22 @@ test.describe("[AnatoyKarpovichApp][demo-registration-form]", () => {
     await confirmPassword.fill(userData.password);
     await submitButtn.click();
     await expect(successMessage).toHaveText(pageTitle);
+
+    //Check registration details
+    const fullName = page.locator("#fullName");
+    await expect(fullName).toHaveText(`${userData.firstName} ${userData.lastName}`);
+    await expect(address).toHaveText(userData.address);
+    await expect(emailAddress).toHaveText(userData.email);
+    await expect(phone).toHaveText(userData.phone);
+    await expect(countryDropdown).toHaveText(userData.country);
+    const gender = page.locator("#gender");
+    await expect(gender).toHaveText(userData.gender);
+    await expect(language).toHaveText(userData.language);
+    await expect(skills).toHaveText(userData.skills.join(", "));
+    const hobbies_ = page.locator("#hobbies");
+    await expect(hobbies_).toHaveText(userData.hobbies);
+    const dateOfBirth = page.locator("#dateOfBirth");
+    await expect(dateOfBirth).toContainText(`${userData.dateOfBirth.day} ${userData.dateOfBirth.month} ${userData.dateOfBirth.year}`);
+    expect((await password.innerText()).length).toBe(userData.password.length);
   });
 });
