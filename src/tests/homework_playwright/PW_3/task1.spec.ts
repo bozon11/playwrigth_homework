@@ -14,7 +14,7 @@
 
 import test, { expect } from "@playwright/test";
 
-import userData from "./register.data";
+import userData from "./test_data/register.data";
 test.describe("[AnatoyKarpovichApp][demo-registration-form/]", () => {
   const url = "https://anatoly-karpovich.github.io/demo-login-form/";
 
