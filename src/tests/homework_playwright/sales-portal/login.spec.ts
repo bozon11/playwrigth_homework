@@ -5,14 +5,11 @@
 //   - fillCredentials method
 //   - click on login button method
 
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "ui/pages/login.page";
+import { test, expect } from "fixtures/pages.fixture";
 import { credentials } from "config/env";
 
 test.describe("Sales portal", () => {
-  test("Should successfuly login", async ({ page }) => {
-    const loginPage = new LoginPage(page);
-
+  test("Should successfuly login", async ({ loginPage }) => {
     await loginPage.goto();
     await expect(loginPage.emailInput).toBeVisible();
     await loginPage.login(credentials.username, credentials.password);
