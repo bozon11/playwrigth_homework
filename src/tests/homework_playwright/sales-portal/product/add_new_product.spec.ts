@@ -22,7 +22,7 @@ test.describe("Sales portal", () => {
     const productsListPage = new ProductsListPage(page);
     const addNewProductPage = new AddNewProductPage(page);
 
-    await loginPage.goto();
+    await loginPage.open();
     await expect(loginPage.emailInput).toBeVisible();
     await loginPage.login(credentials.username, credentials.password);
     await loginPage.clickLoginButton();
