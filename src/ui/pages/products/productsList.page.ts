@@ -1,8 +1,10 @@
 import { MANUFACTURERS } from "data/salesPortal/products/manufactures";
 import { SalesPortalPage } from "../salesPortal.page";
 import { IProductInTable } from "data/types/product.types";
+import { ProductConfirmationModal } from "ui/pages/products/productConfirmationModal";
 
 export class ProductsListPage extends SalesPortalPage {
+  readonly deleteModal = new ProductConfirmationModal(this.page);
   readonly productsPageTitle = this.page.locator("h2.fw-bold");
   readonly addNewProductButton = this.page.locator('[name="add-button"]');
   get allRows() {
@@ -13,6 +15,10 @@ export class ProductsListPage extends SalesPortalPage {
   readonly priceCell = (productName: string) => this.tableRowByName(productName).locator("td").nth(1);
   readonly manufacturerCell = (productName: string) => this.tableRowByName(productName).locator("td").nth(2);
   readonly createdOnCell = (productName: string) => this.tableRowByName(productName).locator("td").nth(3);
+
+  readonly editButton = (productName: string) => this.tableRowByName(productName).getByTitle("Edit");
+  readonly detailsButton = (productName: string) => this.tableRowByName(productName).getByTitle("Details");
+  readonly deleteButton = (productName: string) => this.tableRowByName(productName).getByTitle("Delete");
 
   readonly uniqueElement = this.addNewProductButton;
 
@@ -29,5 +35,10 @@ export class ProductsListPage extends SalesPortalPage {
       manufacturer: manufacturer as MANUFACTURERS,
       createdOn: createdOn!,
     };
+  }
+
+  async clickDeleteProduct(productName: string) {
+    await this.tableRowByName(productName).waitFor();
+    await this.deleteButton(productName).click();
   }
 }
