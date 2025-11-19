@@ -12,8 +12,10 @@ import { generateProductData } from "data/salesPortal/products/generateProductDa
 import _ from "lodash";
 
 test.describe("Sales portal", () => {
+
   test("Add new product", async ({ loginPage, homePage, productsListPage, addNewProductPage }) => {
-    await loginPage.goto();
+    await loginPage.open();
+
     await expect(loginPage.emailInput).toBeVisible();
     await loginPage.login(credentials.username, credentials.password);
     await loginPage.clickLoginButton();

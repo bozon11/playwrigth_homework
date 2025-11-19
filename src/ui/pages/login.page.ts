@@ -1,25 +1,18 @@
-import { Page, Locator } from "@playwright/test";
-import { SALES_PORTAL_URL } from "config/env";
+import { Page } from "@playwright/test";
+import { SalesPortalPage } from "./salesPortal.page";
 
-export class LoginPage {
-  readonly page: Page;
-  readonly emailInput: Locator;
-  readonly passwordInput: Locator;
-  readonly loginButton: Locator;
-  readonly spinner: Locator;
-  readonly welcomeText: Locator;
+export class LoginPage extends SalesPortalPage {
+  readonly loginForm = this.page.locator("//form");
+  readonly pageTitle = this.page.getByText("Sign in with");
+  readonly emailInput = this.page.locator("#emailinput");
+  readonly passwordInput = this.page.locator("#passwordinput");
+  readonly loginButton = this.page.locator("button[type='submit']");
+  readonly welcomeText = this.page.locator(".welcome-text");
+
+  readonly uniqueElement = this.loginForm;
 
   constructor(page: Page) {
-    this.page = page;
-    this.emailInput = page.locator('input[id="emailinput"]');
-    this.passwordInput = page.locator('input[id="passwordinput"]');
-    this.loginButton = page.locator('button[type="submit"]');
-    this.spinner = page.locator(".spinner-border");
-    this.welcomeText = page.locator(".welcome-text");
-  }
-
-  async goto() {
-    await this.page.goto(SALES_PORTAL_URL);
+    super(page);
   }
 
   async login(username: string, password: string) {
